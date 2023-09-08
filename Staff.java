@@ -7,6 +7,7 @@ public class Staff extends Person {
 
     public Staff(int id, String name, String gender, int salary, LocalDate startDate) {
         super(id, name, gender);
+
         this.salary = salary;
         this.startDate = startDate;
     }

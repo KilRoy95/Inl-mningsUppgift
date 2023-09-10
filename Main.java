@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static ArrayList<Staff> staffList = new ArrayList<>();
+
     public static ArrayList<Trainee> traineeList = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -40,10 +41,11 @@ public class Main {
                     break;
                 }
                 case "remove" -> {
-                    RemoveStaff();
+                    RemoveStaff("");
                     break;
                 }
                 case "edit" -> {
+                    EditStaff();
                     break;
                 }
                 case "stafflist" -> {
@@ -125,7 +127,8 @@ public class Main {
         }
     }
 
-    public static void RemoveStaff() {
+    public static void RemoveStaff(String ifMessage) {
+
         System.out.println(
                 "\nStaff:");
         for (Staff obj : staffList) {
@@ -133,6 +136,7 @@ public class Main {
                     "Name: " + obj.getName() + " ID: " + obj.getId() + " Gender: " + obj.getGender()
             );
         }
+
         System.out.println(
                 "\nTrainee:");
         for (Trainee obj : traineeList) {
@@ -140,25 +144,35 @@ public class Main {
                     "Name: " + obj.getName() + " ID: " + obj.getId() + " Gender: " + obj.getGender()
             );
         }
-        Scanner scanner = new Scanner(System.in);
-        String searchValue = scanner.nextLine();
+        if (ifMessage != null)  {
+            System.out.print(ifMessage);
+        }
+
         boolean found = false;
         Object foundItem = "null";
 
-        for (Staff item : staffList) {
-            if (item.getId() == Integer.parseInt(searchValue)) {
-                found = true;
-                foundItem = "ID: " + item.getId() + "\nNAME: " + item.getName();
-                break;
-            }
-        }
+        System.out.print("\nID: ");
+        Scanner scanner = new Scanner(System.in);
+        String searchValue = scanner.nextLine();
 
-        for (Trainee item : traineeList) {
-            if (item.getId() == Integer.parseInt(searchValue)) {
-                found = true;
-                foundItem = "ID: " + item.getId() + "\nNAME: " + item.getName();
-                break;
+        try {
+            for (Staff item : staffList) {
+                if (item.getId() == Integer.parseInt(searchValue)) {
+                    found = true;
+                    foundItem = "ID: " + item.getId() + "\nNAME: " + item.getName();
+                    break;
+                }
             }
+
+            for (Trainee item : traineeList) {
+                if (item.getId() == Integer.parseInt(searchValue)) {
+                    found = true;
+                    foundItem = "ID: " + item.getId() + "\nNAME: " + item.getName();
+                    break;
+                }
+            }
+        } catch (NumberFormatException e){
+            RemoveStaff("Only ID-numbers accepted!");
         }
 
         if (found) {
@@ -173,11 +187,15 @@ public class Main {
             }
 
         } else {
-            System.out.println("Search result: None found!");
+            System.out.println("Not found!");
 
             System.out.print("\npress ENTER to return...");
             scanner.nextLine();
         }
+    }
+
+    public static void EditStaff() {
+
     }
 
     public static void StaffList() {
